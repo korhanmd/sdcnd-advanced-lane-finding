@@ -26,14 +26,14 @@ The goals / steps of this project are the following:
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
-###Writeup / README
+### Writeup / README
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
+#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
 
 You're reading it!
-###Camera Calibration
+### Camera Calibration
 
-####1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
+#### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
 The code for this step is contained in the first code cell of the IPython notebook named "lane_finding.ipynb"
 
@@ -43,17 +43,17 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 
 ![alt text][image1]
 
-###Pipeline (single images)
+### Pipeline (single images)
 
-####1. Provide an example of a distortion-corrected image.
+#### 1. Provide an example of a distortion-corrected image.
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
 ![alt text][image2]
-####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
+#### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at code cell 4 in `lane_finding.ipynb`). I used sobel gradient x with thresholds between 50 and 100. Then I used yellow and white thresholds on HSV image. I choosed (0, 70, 200) and (40, 255, 255) values for minimum and maximum yellow thresholds respectively. For white, I choosed (20, 0, 200) and (255, 80, 255) as minimum and maximum thresholds respectively. I convert to binary and combined this two color thresholded images. Then I combined the output with gradient thresholded image. Here's an example of my output for this step.
 
 ![alt text][image3]
 
-####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
+#### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
 The code for my perspective transform is a function called `perspective_transform()`, which appears in code cell 6 in the `lane_finding.ipynb`. It calculates perspective transform matrix and inverse of it. Then warps the image by using this matrix. The `perspective_transform()` function takes as inputs an image (`img`), as well as top left point (`top_left`), top right point (`top_right`), bottom right point (`bottom_right`), bottom left point (`bottom_left`). I chose the hardcode the source and destination points in the following manner:
 
@@ -81,7 +81,7 @@ I verified that my perspective transform was working as expected by drawing the 
 
 ![alt text][image4]
 
-####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
+#### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
 I used `blind_search()` and `knowing_search()` functions to identify lane-line pixels and fit their positions with a second order polynomial. I used code we learned in lessons. `blind_search()` makes a window search. I used it for first frame of the video. 
 
@@ -90,7 +90,7 @@ I used `blind_search()` and `knowing_search()` functions to identify lane-line p
 ![alt text][image5]
 ![alt text][image6]
 
-####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+#### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
 I used `find_curvature()` function to calculate radius of curvature. It takes points of lane lines. Makes conversion from pixels to meters. Fits a second order polynomail on them and calculates the radius of curvature. Then averages them and returns the result.
 
@@ -98,7 +98,7 @@ For finding position I used `find_position()` function. It takes points of fitte
 
 I did this in code cells 14 and 15 in my code in `lane_finding.ipynb`
 
-####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
+#### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
 I implemented this step in code cell 16 in my code in `lane_finding.ipynb` in the function `draw_lines()`. Here is an example of my result on a test image:
 
@@ -106,17 +106,17 @@ I implemented this step in code cell 16 in my code in `lane_finding.ipynb` in th
 
 ---
 
-###Pipeline (video)
+### Pipeline (video)
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
 Here's a [link to my video result](./project_video_result.mp4)
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.
 
